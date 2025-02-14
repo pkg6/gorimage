@@ -1,6 +1,10 @@
 package gorimage
 
-import "github.com/disintegration/imaging"
+import (
+	"fmt"
+	"github.com/disintegration/imaging"
+	"strings"
+)
 
 type OutputImageType int
 
@@ -14,6 +18,26 @@ const (
 	WEBP
 )
 
+const (
+	ExtPng  = ".png"
+	ExtJpg  = ".jpg"
+	ExtJpeg = ".jpeg"
+	ExtTif  = ".tif"
+	ExtTiff = ".tiff"
+	ExtWebp = ".webp"
+	ExtGif  = ".gif"
+	ExtBmp  = ".bmp"
+)
+
+func IsSupportedImage(ext string) bool {
+	switch strings.ToLower(ext) {
+	case ExtPng, ExtJpg, ExtJpeg, ExtTif, ExtTiff, ExtWebp, ExtGif, ExtBmp:
+		return true
+	default:
+		return false
+	}
+}
+
 type SupportedOutputImageType struct {
 	Name  string          `json:"name"`
 	Value OutputImageType `json:"value"`
@@ -26,6 +50,14 @@ var OutputImagesTypes = []SupportedOutputImageType{
 	{Name: "BMP", Value: BMP},
 	{Name: "GIF", Value: GIF},
 	{Name: "TIFF", Value: TIFF},
+}
+
+func OutputImagesTypesString() string {
+	var s []string
+	for _, v := range OutputImagesTypes {
+		s = append(s, fmt.Sprintf("%d", v.Value))
+	}
+	return strings.Join(s, ",")
 }
 
 type ImageOptions struct {
@@ -97,6 +129,13 @@ var ResampleFilterTypes = []SupportedResampleFilterType{
 	{Name: "Cosine", Value: Cosine},
 }
 
+func ResampleFilterTypesString() string {
+	var s []string
+	for _, v := range ResampleFilterTypes {
+		s = append(s, fmt.Sprintf("%d", v.Value))
+	}
+	return strings.Join(s, ",")
+}
 func MatchFilter(value ResampleFilterType) imaging.ResampleFilter {
 	switch value {
 	case Lanczos:
