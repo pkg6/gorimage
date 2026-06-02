@@ -25,6 +25,7 @@ jobs:
         uses: chihqiang/gobuild-action@main
         with:
           bin_name: gorimage
+          main_go: .cli/main.go
           version: ${{ github.ref_name }}
           add_files: |
             README.md
