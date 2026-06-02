@@ -24,7 +24,7 @@ jobs:
         id: build
         uses: chihqiang/gobuild-action@main
         with:
-          bin_name: sshfwd
+          bin_name: gorimage
           version: ${{ github.ref_name }}
           add_files: |
             README.md
